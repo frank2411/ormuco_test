@@ -57,7 +57,7 @@ class VersionChecker(object):
 
     def compare_versions(self, version_1, version_2):
         """
-            For this simple check I don't need to reorder the versions for the check.
+            For this simple check I don't need to reorder the versions.
             I'll do the check later for a more versatile and a first argument based output.
             This method has a Human phrase-like respose.
         """
