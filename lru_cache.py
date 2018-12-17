@@ -25,6 +25,11 @@ class LRUCacher(object):
     def __delete__(self, key):
         if key in self.entries:
             del self.entries[key]
+            del self.accesses[key]
+
+    def clean(self, keys):
+        sorted_accesses = sorted(self.accesses.items(), key=lambda x: x[1])
+        self.__delete__(sorted_accesses[0][0])
 
     def size(self):
         return len(self.entries)
@@ -36,8 +41,8 @@ class LRUCacher(object):
         current_time = datetime.now()
         for key, entry in self.entries:
             entry_time = entry["last_used"]
-            total_entry_life = (entry_time - current_time).total_seconds()
-            if total_entry_life > self.max_life_seconds:
+            total_entry_life_delta = (entry_time - current_time).total_seconds()
+            if total_entry_life_delta > self.max_life_seconds:
                 del self.entries[key]
 
     def check_if_max(self):
@@ -45,4 +50,4 @@ class LRUCacher(object):
             self.check_items_expirations()
 
         while len(self.entries) < self.max_size:
-            pass
+            self.clean()
