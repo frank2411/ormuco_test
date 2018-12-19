@@ -46,6 +46,7 @@ class LRUCacher(object):
             total_entry_life_delta = (entry_time - current_time).total_seconds()
             if total_entry_life_delta > self.max_life_seconds:
                 del self.entries[key]
+                def self.accesses[key]
 
     def check_if_max(self):
         if len(self.entries) > self.max_size:
