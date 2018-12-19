@@ -13,6 +13,8 @@ class LRUCacher(object):
 
     def __setitem__(self, key, value):
         self.entries[key] = {"value": value, "last_used": datetime.now()}
+        if key not in self.accesses:
+            self.accesses[key] = 0
         self.accesses[key] += 1
         self.check_if_max()
 
